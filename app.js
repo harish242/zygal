@@ -8,23 +8,18 @@ window.addEventListener("load", function () {
 
     monthSelect.value = new Date().getMonth();
     yearSelect.value = new Date().getFullYear();
-
-});
-
-
-window.addEventListener('load', function() {
     loadColorsFromLocalStorage();
     updateCalendar();
-});
-
-
-window.addEventListener("load", function () {
-    updateCalendar();
 
 });
-
-
 populateYearDropdown();
+
+
+
+
+
+
+
 
 
 function populateYearDropdown() {
@@ -67,10 +62,11 @@ function populateMonthDropdown() {
 
 
 let month = 0; 
+let year=0;
 function updateCalendar() {
   
      month = monthSelect.value;
-    const year = yearSelect.value;
+     year = yearSelect.value;
    
     load(month, year);
     setTimeout(()=>{
@@ -126,39 +122,68 @@ function load(month, year) {
 
 
 
-function highlightDay(date, month) {
+// function highlightDay(date, month) {
+//     const dayDivs = document.querySelectorAll('.day');
+//     dayDivs.forEach((dayDiv) => {
+//         if (dayDiv.innerText === date) {
+//             const isGreen = dayDiv.style.backgroundColor === 'green';
+//             dayDiv.style.backgroundColor = isGreen ? 'white' : 'green';
+
+            
+//             const storageKey = `${month}-${date}`;
+//             localStorage.setItem(storageKey, JSON.stringify(isGreen ? 'white' : 'green'));
+//         }
+//     });
+// }
+
+
+
+
+
+// function loadColorsFromLocalStorage() {
+//     const dayDivs = document.querySelectorAll('.day');
+//     dayDivs.forEach((dayDiv) => {
+//         const date = dayDiv.innerText;
+//         const month = monthSelect.value; 
+
+        
+//         const storageKey = `${month}-${date}`;
+//         const color = JSON.parse(localStorage.getItem(storageKey));
+
+//         if (color) {
+//             dayDiv.style.backgroundColor = color;
+//         }
+//     });
+// }
+function highlightDay(date, month, year) {
     const dayDivs = document.querySelectorAll('.day');
     dayDivs.forEach((dayDiv) => {
         if (dayDiv.innerText === date) {
             const isGreen = dayDiv.style.backgroundColor === 'green';
             dayDiv.style.backgroundColor = isGreen ? 'white' : 'green';
 
-            
-            const storageKey = `${month}-${date}`;
+            const storageKey = `${year}-${month}-${date}`;
             localStorage.setItem(storageKey, JSON.stringify(isGreen ? 'white' : 'green'));
         }
     });
 }
 
-
-
-
-
 function loadColorsFromLocalStorage() {
     const dayDivs = document.querySelectorAll('.day');
     dayDivs.forEach((dayDiv) => {
         const date = dayDiv.innerText;
-        const month = monthSelect.value; 
+        const month = monthSelect.value;
 
-        
-        const storageKey = `${month}-${date}`;
+        const storageKey = `${year}-${month}-${date}`;
         const color = JSON.parse(localStorage.getItem(storageKey));
-
+        console.log('yes me',color)
         if (color) {
             dayDiv.style.backgroundColor = color;
         }
     });
+    console.log('iam runing',dayDivs)
 }
+
 
 
 setTimeout(()=>{
@@ -167,7 +192,7 @@ setTimeout(()=>{
 
 document.querySelector('button').addEventListener('click', function() {
     const enteredDate = document.querySelector('input').value;
-    highlightDay(enteredDate,month);
+    highlightDay(enteredDate,month,year);
 });
 
 
